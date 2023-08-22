@@ -276,7 +276,7 @@ RSS_CHAT_ID = '' if len(RSS_CHAT_ID) == 0 else int(RSS_CHAT_ID)
 try:
     USER_SESSION_STRING = environ.get('USER_SESSION_STRING', '')
     if len(USER_SESSION_STRING) != 0:
-        premium_session = Client('Atrocious-Premium', api_id=TELEGRAM_API, api_hash=TELEGRAM_HASH, session_string=USER_SESSION_STRING, parse_mode=enums.ParseMode.HTML, no_updates=True)
+        premium_session = Client('WZML-Premium', api_id=TELEGRAM_API, api_hash=TELEGRAM_HASH, session_string=USER_SESSION_STRING, parse_mode=enums.ParseMode.HTML, no_updates=True)
     if not premium_session:
         LOGGER.error("Cannot initialized User Session. Please regenerate USER_SESSION_STRING")
     else:
@@ -498,13 +498,13 @@ START_BTN1_NAME = environ.get('START_BTN1_NAME', '')
 START_BTN1_URL = environ.get('START_BTN1_URL', '')
 if len(START_BTN1_NAME) == 0 or len(START_BTN1_URL) == 0:
     START_BTN1_NAME = 'Master'
-    START_BTN1_URL = 'https://t.me/ItsBitDefender'
+    START_BTN1_URL = 'https://t.me/krn_adhikari'
 
 START_BTN2_NAME = environ.get('START_BTN2_NAME', '')
 START_BTN2_URL = environ.get('START_BTN2_URL', '')
 if len(START_BTN2_NAME) == 0 or len(START_BTN2_URL) == 0:
-    START_BTN2_NAME = 'Mirror Group'
-    START_BTN2_URL = 'https://t.me/+yw0A-x4cYBphZmJl'
+    START_BTN2_NAME = 'Support Group'
+    START_BTN2_URL = 'https://t.me/WeebZone_updates'
 
 BUTTON_FOUR_NAME = environ.get('BUTTON_FOUR_NAME', '')
 BUTTON_FOUR_URL = environ.get('BUTTON_FOUR_URL', '')
@@ -568,15 +568,15 @@ else:
 
 AUTHOR_NAME = environ.get('AUTHOR_NAME', '')
 if len(AUTHOR_NAME) == 0:
-    AUTHOR_NAME = 'Atrocious'
+    AUTHOR_NAME = 'WZML'
 
 AUTHOR_URL = environ.get('AUTHOR_URL', '')
 if len(AUTHOR_URL) == 0:
-    AUTHOR_URL = 'https://t.me/Atrocious_Bot_Update'
+    AUTHOR_URL = 'https://t.me/WeebZone_updates'
 
 TITLE_NAME = environ.get('TITLE_NAME', '')
 if len(TITLE_NAME) == 0:
-    TITLE_NAME = 'Atrocious'
+    TITLE_NAME = 'WeebZone'
 
 NAME_FONT = environ.get('NAME_FONT', '')
 if len(NAME_FONT) == 0:
@@ -640,7 +640,7 @@ if len(BASE_URL) == 0:
 
 UPSTREAM_REPO = environ.get('UPSTREAM_REPO', '')
 if len(UPSTREAM_REPO) == 0:
-   UPSTREAM_REPO = 'https://github.com/SN-Abdullah-Al-Noman/SN_WZML'
+   UPSTREAM_REPO = ''
 
 UPSTREAM_BRANCH = environ.get('UPSTREAM_BRANCH', '')
 if len(UPSTREAM_BRANCH) == 0:
