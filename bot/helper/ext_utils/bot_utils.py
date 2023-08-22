@@ -48,7 +48,7 @@ class EngineStatus:
     STATUS_YT = "YT-Dlp"
     STATUS_EXT = "pExtract"
     STATUS_SPLIT_MERGE = "FFmpeg"
-    STATUS_ZIP = f"7z"
+    STATUS_ZIP = f"p7zip"
     STATUS_QUEUE = "Sleep"
 
     
@@ -233,41 +233,42 @@ def get_readable_message():
                 msg += f"<b><a href='{download.message.link}'>{download.status()}</a>: </b>"
                 msg += f"<code>{escape(str(download.name()))}</code>"
             if download.status() not in [MirrorStatus.STATUS_SEEDING, MirrorStatus.STATUS_SPLITTING, MirrorStatus.STATUS_CONVERTING, MirrorStatus.STATUS_QUEUEDL, MirrorStatus.STATUS_QUEUEUP]:
-                msg += f"\n<b></b>{get_progress_bar_string(download)} {download.progress()}"
-                msg += f"\n<b>Done:</b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
-                msg += f"\n<b>Speed:</b> {download.speed()}"
-                msg += f"\n<b>ETA:</b> {download.eta()}"
-                msg += f"<b> | Elapsed: </b>{get_readable_time(time() - download.message.date.timestamp())}"
-                msg += f"\n<b>Engine:</b> {download.eng()}"
+                msg += f"\n<b>├</b>{get_progress_bar_string(download)} {download.progress()}"
+                msg += f"\n<b>├ Done:</b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
+                msg += f"\n<b>├ Speed:</b> {download.speed()}"
+                msg += f"\n<b>├ ETA:</b> {download.eta()}"
+                msg += f"\n<b>├ Elapsed: </b>{get_readable_time(time() - download.message.date.timestamp())}"
+                msg += f"\n<b>├ Engine :</b> {download.eng()}"
 
                 if hasattr(download, 'seeders_num'):
                     try:
-                        msg += f"\n<b>Seeders:</b> {download.seeders_num()} | <b>Leechers:</b> {download.leechers_num()}"
-                        msg += f"\n<b>Select:</b> <code>/{BotCommands.BtSelectCommand} {download.gid()}</code>"
+                        msg += f"\n<b>├ Seeders:</b> {download.seeders_num()} | <b>Leechers:</b> {download.leechers_num()}"
+                        msg += f"\n<b>├ Select:</b> <code>/{BotCommands.BtSelectCommand} {download.gid()}</code>"
                     except:
                         pass
                 if download.message.chat.type != 'private':
                     try:
                         chatid = str(download.message.chat.id)[4:]
-                        msg += f'\n<b>Source: </b><a href="https://t.me/c/{chatid}/{download.message.message_id}">{download.message.from_user.first_name}</a> | <b>Id:</b> <code>{download.message.from_user.id}</code>'
-                        msg += f"\n<b>Cancel: </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"                 
+                        msg += f'\n<b>├ Source: </b><a href="https://t.me/c/{chatid}/{download.message.message_id}">{download.message.from_user.first_name}</a> | <b>Id:</b> <code>{download.message.from_user.id}</code>'
+                        msg += f"\n<b>╰ Cancel: </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"                 
                     except:
                         pass
                 else:
-                    msg += f'\n<b>User:</b> ️<code>{download.message.from_user.first_name}</code> | <b>Id:</b> <code>{download.message.from_user.id}</code>'
-                    msg += f"\n<b>Cancel: </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
+                    msg += f'\n<b>├ User:</b> ️<code>{download.message.from_user.first_name}</code> | <b>Id:</b> <code>{download.message.from_user.id}</code>'
+                    msg += f"\n<b>╰ Cancel: </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"
             elif download.status() == MirrorStatus.STATUS_SEEDING:
-                msg += f"\n<b>Size: </b>{download.size()}"
-                msg += f"\n<b>Engine:</b> <code>qBittorrent</code>"
-                msg += f"\n<b>Speed: </b>{download.upload_speed()}"
-                msg += f"\n<b>Uploaded: </b>{download.uploaded_bytes()}"
-                msg += f"\n<b>Ratio: </b>{download.ratio()}"
-                msg += f" | <b> Time: </b>{download.seeding_time()}"
-                msg += f"\n<b>Elapsed: </b>{get_readable_time(time() - download.message.date.timestamp())}"
-                msg += f"\n<b></b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"   
+                    msg += f"\n<b>├ Size: </b>{download.size()}"
+                    msg += f"\n<b>├ Engine:</b> <code>qBittorrent v4.4.2</code>"
+                    msg += f"\n<b>├ Speed: </b>{download.upload_speed()}"
+                    msg += f"\n<b>├ Uploaded: </b>{download.uploaded_bytes()}"
+                    msg += f"\n<b>├ Ratio: </b>{download.ratio()}"
+                    msg += f"\n<b>├ Time: </b>{download.seeding_time()}"
+                    msg += f"\n<b>├ Elapsed: </b>{get_readable_time(time() - download.message.date.timestamp())}"
+                    msg += f"\n<b>╰ </b><code>/{BotCommands.CancelMirror} {download.gid()}</code>"   
             else:
-                msg += f"\n<b>Engine:</b> {download.eng()}"
-                msg += f"\n<b>Size: </b>{download.size()}"
+                    msg += f"\n<b>├ Engine :</b> {download.eng()}"
+                    msg += f"\n<b>╰ Size: </b>{download.size()}"
+            msg += f"\n<b>_____________________________________</b>"    
             msg += "\n\n"
             if index == STATUS_LIMIT:
                 break
@@ -307,7 +308,7 @@ def get_readable_message():
         buttons = ButtonMaker()
         buttons.sbutton("Refresh", "status refresh")
         buttons.sbutton("Statistics", str(THREE))
-        buttons.buildbutton(f"Repo", f"https://github.com/SN-Abdullah-Al-Noman/Atrocious_Mirror")
+        buttons.buildbutton(f"Repo", f"https://github.com/weebzone/WZML")
         buttons.sbutton("Close", "status close")
         sbutton = buttons.build_menu(2)
         
@@ -316,7 +317,7 @@ def get_readable_message():
         buttons.sbutton(f"{PAGE_NO}/{PAGES}", str(THREE))
         buttons.sbutton("Next", "status nex")
         buttons.sbutton("Refresh", "status refresh")
-        buttons.buildbutton(f"Repo", f"https://github.com/SN-Abdullah-Al-Noman/Atrocious_Mirror")
+        buttons.buildbutton(f"Repo", f"https://github.com/weebzone/WZML")
         buttons.sbutton("Close", "status close")
         button = buttons.build_menu(3)
         return msg + bmsg, button
@@ -605,68 +606,8 @@ def is_paid(user_id):
             return True
         else: return False
     else: return False
-
-def format_validity_time(validity_time):
-    days = validity_time // (24 * 3600)
-    validity_time = validity_time % (24 * 3600)
-    hours = validity_time // 3600
-    validity_time %= 3600
-    minutes = validity_time // 60
-    validity_time %= 60
-    seconds = validity_time
-    time_str = ''
-    if days > 0:
-        suffix = 's' if days > 1 else ''
-        time_str += f"{days} day{suffix} "
-    if hours > 0:
-        suffix = 's' if hours > 1 else ''
-        time_str += f"{hours} hour{suffix} "
-    if minutes > 0:
-        suffix = 's' if minutes > 1 else ''
-        time_str += f"{minutes} minute{suffix} "
-    suffix = 's' if seconds > 1 else ''
-    time_str += f"{seconds} second{suffix}"
-    return time_str
-
-def check_ads_token_status(update, context):
-    token_timeout = config_dict['TOKEN_TIMEOUT']
-    user_id = update.message.from_user.id
-    reply_to = update.message.reply_to_message
-    
-    if user_id == OWNER_ID or is_sudo(user_id) or is_paid(user_id):
-        return True
-
-    if update.message.from_user.username:
-        tag = f"@{update.message.from_user.username}"
-    else:
-        tag = update.message.from_user.mention_html(update.message.from_user.first_name)
-
-    if reply_to and reply_to.from_user:
-        if reply_to.from_user.username:
-            tag = f"@{reply_to.from_user.username}"
-        else:
-            tag = reply_to.from_user.mention_html(reply_to.from_user.first_name)
-
-    if config_dict.get('TOKEN_TIMEOUT'):
-        user_data.setdefault(user_id, {})
-        data = user_data[user_id]
-        expire = data.get('time')
-        isExpired = expire is None or (expire is not None and (time() - expire) > config_dict['TOKEN_TIMEOUT'])
-        if isExpired:
-            token = data.get('token') or str(uuid4())
-            if expire is not None:
-                del data['time']
-            data['token'] = token
-            user_data[user_id].update(data)
-            keyboard = [[InlineKeyboardButton("Refresh Token", url=short_url(f'https://telegram.me/{bot_name}?start={token}'))]]
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            time_str = format_validity_time(token_timeout)
-            update.message.reply_text(f'<b>Hey {tag}.</b>\n\nYour Ads token is expired, refresh your token and try again.\n\n<b>Token Timeout:</b> {time_str}\n\n<b>What is token?</b>\nThis is an ads token. If you pass 1 ad, you can use the bot for {time_str} after passing the ad.\n\n<b>Token Refresh Video Tutorial</b> ⬇️\nhttps://t.me/AtrociousMirrorBackup/116', reply_markup=reply_markup)
-            return False
-    return True
     
 ONE, TWO, THREE = range(3)
-
 def pop_up_stats(update, context):
     query = update.callback_query
     stats = bot_sys_stats()
@@ -686,7 +627,7 @@ def bot_sys_stats():
     mem = virtual_memory().percent
     disk = disk_usage("/").percent
     return f"""
-Modified by @ItsBitDefender
+Made with by {config_dict['CREDIT_NAME']}
 
 Tasks Running: {tasks}
 
