@@ -606,8 +606,68 @@ def is_paid(user_id):
             return True
         else: return False
     else: return False
+
+def format_validity_time(validity_time):
+    days = validity_time // (24 * 3600)
+    validity_time = validity_time % (24 * 3600)
+    hours = validity_time // 3600
+    validity_time %= 3600
+    minutes = validity_time // 60
+    validity_time %= 60
+    seconds = validity_time
+    time_str = ''
+    if days > 0:
+        suffix = 's' if days > 1 else ''
+        time_str += f"{days} day{suffix} "
+    if hours > 0:
+        suffix = 's' if hours > 1 else ''
+        time_str += f"{hours} hour{suffix} "
+    if minutes > 0:
+        suffix = 's' if minutes > 1 else ''
+        time_str += f"{minutes} minute{suffix} "
+    suffix = 's' if seconds > 1 else ''
+    time_str += f"{seconds} second{suffix}"
+    return time_str
+
+def check_ads_token_status(update, context):
+    token_timeout = config_dict['TOKEN_TIMEOUT']
+    user_id = update.message.from_user.id
+    reply_to = update.message.reply_to_message
+    
+    if user_id == OWNER_ID or is_sudo(user_id) or is_paid(user_id):
+        return True
+
+    if update.message.from_user.username:
+        tag = f"@{update.message.from_user.username}"
+    else:
+        tag = update.message.from_user.mention_html(update.message.from_user.first_name)
+
+    if reply_to and reply_to.from_user:
+        if reply_to.from_user.username:
+            tag = f"@{reply_to.from_user.username}"
+        else:
+            tag = reply_to.from_user.mention_html(reply_to.from_user.first_name)
+
+    if config_dict.get('TOKEN_TIMEOUT'):
+        user_data.setdefault(user_id, {})
+        data = user_data[user_id]
+        expire = data.get('time')
+        isExpired = expire is None or (expire is not None and (time() - expire) > config_dict['TOKEN_TIMEOUT'])
+        if isExpired:
+            token = data.get('token') or str(uuid4())
+            if expire is not None:
+                del data['time']
+            data['token'] = token
+            user_data[user_id].update(data)
+            keyboard = [[InlineKeyboardButton("Refresh Token", url=short_url(f'https://telegram.me/{bot_name}?start={token}'))]]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            time_str = format_validity_time(token_timeout)
+            update.message.reply_text(f'<b>Hey {tag}.</b>\n\nYour Ads token is expired, refresh your token and try again.\n\n<b>Token Timeout:</b> {time_str}\n\n<b>What is token?</b>\nThis is an ads token. If you pass 1 ad, you can use the bot for {time_str} after passing the ad.\n\n<b>Token Refresh Video Tutorial</b> ⬇️\nhttps://t.me/AtrociousMirrorBackup/116', reply_markup=reply_markup)
+            return False
+    return True
     
 ONE, TWO, THREE = range(3)
+
 def pop_up_stats(update, context):
     query = update.callback_query
     stats = bot_sys_stats()
