@@ -27,7 +27,7 @@ from .modules import authorize, list, cancel_mirror, mirror_status, mirror_leech
                      delete, count, users_settings, search, rss, wayback, speedtest, anilist, imdb, bt_select, mediainfo, hash, \
                      scraper, pictures, save_msg, sel_cat, users, drive_clean, broadcast
 
-version = "Master Branch 5.0.3"
+version = "5.0.1"
 timez = config_dict['TIMEZONE']
 now=datetime.now(timezone(f'{timez}'))
 
@@ -60,17 +60,17 @@ def stats(update, context):
     mem_t = get_readable_file_size(memory.total)
     mem_a = get_readable_file_size(memory.available)
     mem_u = get_readable_file_size(memory.used)
-    stats = f'<b>BOT STATISTICS: </b>\n\n' \
-            f'<b>• Updated On:</b> {last_commit}\n'\
-            f'<b>• Bot Uptime:</b> {currentTime}\n'\
-            f'<b>• Version:</b> {version}\n'\
-            f'<b>• OS Uptime:</b> {osUptime}\n'\
-            f'<b>• CPU USE:</b> {cpuUsage}%\n'\
-            f'<b>• RAM USE:</b> {mem_p}%\n'\
-            f'<b>• DISK USE:</b> {disk}%\n'\
-            f'<b>• DISK FREE:</b> {free}\n'\
-            f'<b>• UPLOAD DATA:</b> {sent}\n'\
-            f'<b>• DOWNLOAD DATA:</b> {recv}\n\n'
+    stats = f'<b>╭─《🌐 BOT STATISTICS 🌐》</b>\n' \
+            f'<b>├  Updated On: </b>{last_commit}\n'\
+            f'<b>├  Uptime: </b>{currentTime}\n'\
+            f'<b>├  Version: </b>{version}\n'\
+            f'<b>├  OS Uptime: </b>{osUptime}\n'\
+            f'<b>├  CPU:</b> [{progress_bar(cpuUsage)}] {cpuUsage}%\n'\
+            f'<b>├  RAM:</b> [{progress_bar(mem_p)}] {mem_p}%\n'\
+            f'<b>├  Disk:</b> [{progress_bar(disk)}] {disk}%\n'\
+            f'<b>├  Disk Free:</b> {free}\n'\
+            f'<b>├  Upload Data:</b> {sent}\n'\
+            f'<b>╰  Download Data:</b> {recv}\n\n'
             
     if config_dict['SHOW_LIMITS_IN_STATS']:
         TORRENT_DIRECT_LIMIT = config_dict['TORRENT_DIRECT_LIMIT']
@@ -89,14 +89,14 @@ def stats(update, context):
         total_task = 'No Limit Set' if TOTAL_TASKS_LIMIT == '' else f'{TOTAL_TASKS_LIMIT} Total Tasks/Time'
         user_task = 'No Limit Set' if USER_TASKS_LIMIT == '' else f'{USER_TASKS_LIMIT} Tasks/user'
 
-        stats += f'<b>BOT LIMITATIONS: </b>\n\n'\
-                 f'<b>• Torrent-Direct:</b> {torrent_direct}\n'\
-                 f'<b>• Zip-Unzip:</b> {zip_unzip}\n'\
-                 f'<b>• Leech:</b> {leech_limit}\n'\
-                 f'<b>• Clone:</b> {clone_limit}\n'\
-                 f'<b>• Mega:</b> {mega_limit}\n'\
-                 f'<b>• Total Tasks:</b> {total_task}\n'\
-                 f'<b>• User Tasks:</b> {user_task}\n\n'
+        stats += f'<b>╭─《 ⚠️ BOT LIMITS ⚠️ 》</b>\n'\
+                 f'<b>├  Torrent/Direct: </b>{torrent_direct}\n'\
+                 f'<b>├  Zip/Unzip: </b>{zip_unzip}\n'\
+                 f'<b>├  Leech: </b>{leech_limit}\n'\
+                 f'<b>├  Clone: </b>{clone_limit}\n'\
+                 f'<b>├  Mega: </b>{mega_limit}\n'\
+                 f'<b>├  Total Tasks: </b>{total_task}\n'\
+                 f'<b>╰  User Tasks: </b>{user_task}\n\n'
 
     if config_dict['PICS']:
         sendPhoto(stats, context.bot, update.message, rchoice(config_dict['PICS']))
@@ -163,7 +163,7 @@ def log(update, context):
     sendLogFile(context.bot, update.message)
 
 help_string = '''
-<b><a href='https://github.com/SN-Abdullah-Al-Noman/Atrocious_Mirror'>Atrocious-Mirror</a></b> - The Ultimate Telegram MIrror-Leech Bot to Upload Your File & Link in Google Drive & Telegram
+<b><a href='https://github.com/weebzone/WZML'>WeebZone</a></b> - The Ultimate Telegram MIrror-Leech Bot to Upload Your File & Link in Google Drive & Telegram
 Choose a help category:
 '''
 
