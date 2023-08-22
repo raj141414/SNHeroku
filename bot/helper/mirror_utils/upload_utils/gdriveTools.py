@@ -270,7 +270,7 @@ class GoogleDriveHelper:
         # File body description
         file_metadata = {
             "name": directory_name,
-            "description": f"Uploaded By Atrocious Mirror",
+            "description": f"Uploaded By WZML",
             "mimeType": self.__G_DRIVE_DIR_MIME_TYPE
         }
         if dest_id is not None:
@@ -290,7 +290,7 @@ class GoogleDriveHelper:
         # File body description
         file_metadata = {
             'name': file_name,
-            'description': f"Uploaded By Atrocious Mirror",
+            'description': f"Uploaded By WZML",
             'mimeType': mime_type,
         }
         if dest_id is not None:
@@ -382,11 +382,11 @@ class GoogleDriveHelper:
                     self.deletefile(durl)
                     return "your clone has been stopped and cloned data has been deleted!", "cancelled"
                 _, f_name, _ = change_filename(meta.get("name"), self.user_id, all_edit=False, mirror_type=True)
-                msg += f'<b>Name: </b><code>{f_name}</code>'
-                msg += f'\n<b>Size: </b>{get_readable_file_size(self.transferred_size)}'
-                msg += f'\n<b>Type: </b>Folder'
-                msg += f'\n<b>SubFolders: </b>{self.__total_folders}'
-                msg += f'\n<b>Files: </b>{self.__total_files}'
+                msg += f'<b>╭ Name: </b><code>{meta.get("name")}</code>'
+                msg += f'\n<b>├ Size: </b>{get_readable_file_size(self.transferred_size)}'
+                msg += f'\n<b>├ Type: </b>Folder'
+                msg += f'\n<b>├ SubFolders: </b>{self.__total_folders}'
+                msg += f'\n<b>├ Files: </b>{self.__total_files}'
                 buttons = ButtonMaker()
                 if config_dict['DISABLE_DRIVE_LINK']:
                     if self.user_id == OWNER_ID:
@@ -401,7 +401,7 @@ class GoogleDriveHelper:
                     buttons.buildbutton("⚡ Index Link", url)
             else:
                 file = self.__copyFile(meta.get('id'), GDRIVEID, meta.get('name'))
-                msg += f'<b>Name: </b><code>{file.get("name")}</code>'
+                msg += f'<b>╭ Name: </b><code>{file.get("name")}</code>'
                 durl = self.__G_DRIVE_BASE_DOWNLOAD_URL.format(file.get("id"))
                 buttons = ButtonMaker()
                 if config_dict['DISABLE_DRIVE_LINK']:
@@ -413,8 +413,8 @@ class GoogleDriveHelper:
                     buttons.buildbutton("☁️ Drive Link", durl)
                 if mime_type is None:
                     mime_type = 'File'
-                msg += f'\n<b>Size: </b>{get_readable_file_size(int(meta.get("size", 0)))}'
-                msg += f'\n<b>Type: </b>{mime_type}'
+                msg += f'\n<b>├ Size: </b>{get_readable_file_size(int(meta.get("size", 0)))}'
+                msg += f'\n<b>├ Type: </b>{mime_type}'
                 if INDEX_URL := INDEXURL:
                     url_path = rquote(f'{file.get("name")}', safe='')
                     url = f'{INDEX_URL}/{url_path}'
