@@ -12,7 +12,7 @@ basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     handlers=[FileHandler('log.txt'), StreamHandler()],
                     level=INFO)
 
-UPSTREAM_REPO = 'https://github.com/rarakukka/Snfromdan'
+UPSTREAM_REPO = 'https://github.com/raj141414/SNHeroku'
 UPSTREAM_BRANCH = 'master'
 
 if UPSTREAM_REPO is not None:
