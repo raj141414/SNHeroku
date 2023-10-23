@@ -87,7 +87,7 @@ class TgUploader:
         
         BOT_PM_X = get_bot_pm(user_id_)
         
-        cap_mono = f"<code>{file_}</code>"
+        cap_mono = f"<b>{file_}</b>"
         new_path = ospath.join(dirpath, file_)
         osrename(up_path, new_path)
         up_path = new_path
