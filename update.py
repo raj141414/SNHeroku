@@ -12,8 +12,8 @@ basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     handlers=[FileHandler('log.txt'), StreamHandler()],
                     level=INFO)
 
-UPSTREAM_REPO = 'https://github.com/rarakukka/qzmlllll'
-UPSTREAM_BRANCH = 'main'
+UPSTREAM_REPO = 'https://github.com/rarakukka/Snfromdan'
+UPSTREAM_BRANCH = 'master'
 
 if UPSTREAM_REPO is not None:
     if ospath.exists('.git'):
