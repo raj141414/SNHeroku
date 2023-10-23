@@ -87,7 +87,7 @@ class TgUploader:
         
         BOT_PM_X = get_bot_pm(user_id_)
         
-        cap_mono = f"<{config_dict['CAPTION_FONT']}>{config_dict['LEECH_CAPTION']}</b>\n\n<b>{file_}</{config_dict['CAPTION_FONT']}>"
+        cap_mono = f"<{config_dict['CAPTION_FONT']}>{file_}</{config_dict['CAPTION_FONT']}>"
         new_path = ospath.join(dirpath, file_)
         osrename(up_path, new_path)
         up_path = new_path
